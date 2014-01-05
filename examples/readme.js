@@ -40,20 +40,6 @@ var configA = tart.stepping();
 var configB = tart.stepping();
 var configC = tart.stepping();
 
-/*
-var dispatchA = coreSponsor(host.adapter(configA, configA.dispatch));
-var dispatchB = coreSponsor(host.adapter(configB, configB.dispatch));
-var dispatchC = coreSponsor(host.adapter(configC, configC.dispatch));
-
-var scheduler = coreSponsor(host.dispatchRing([
-    dispatchA, 
-    dispatchC, 
-    dispatchB, 
-    dispatchC 
-]));
-*/
-
-/**/
 var eventLoopA = coreSponsor(host.adapter(configA, configA.eventLoop));
 var eventLoopB = coreSponsor(host.adapter(configB, configB.eventLoop));
 var eventLoopC = coreSponsor(host.adapter(configC, configC.eventLoop));
@@ -63,7 +49,6 @@ var scheduler = coreSponsor(host.eventLoopRing([
     { eventLoop:eventLoopB }, 
     { eventLoop:eventLoopC, options:{ count:2 } }
 ]));
-/**/
 
 /*
 Create an actor behavior that counts down to zero,

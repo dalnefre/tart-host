@@ -1,0 +1,35 @@
+{
+  "name": "tart-host",
+  "version": "0.1.0",
+  "description": "Tart core scheduling",
+  "scripts": {
+    "inject-examples": "node scripts/injectExamples.js",
+    "readme": "node examples/readme.js",
+    "test": "node scripts/test.js"
+  },
+  "main": "index.js",
+  "devDependencies": {
+    "nodeunit": "0.8.x"
+  },
+  "dependencies": {
+    "tart-stepping": "0.2.x",
+    "tart": "0.2.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:dalnefre/tart-host.git"
+  },
+  "keywords": [
+    "tart",
+    "host",
+    "core",
+    "scheduler",
+    "configuration",
+    "actor"
+  ],
+  "contributors": [
+    "Dale Schumacher <dale.schumacher@gmail.com>",
+    "Tristan Slominski <tristan.slominski@gmail.com>"
+  ],
+  "license": "MIT"
+}

@@ -1,6 +1,6 @@
 {
   "name": "tart-host",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Tart core scheduling",
   "scripts": {
     "inject-examples": "node scripts/injectExamples.js",

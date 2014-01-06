@@ -1,6 +1,6 @@
 /*
 
-index.js - "tart-host": Actor-based core scheduling for child configurations
+index.js - "tart-host": Actor-based core scheduling for guest configurations
 
 The MIT License (MIT)
 
@@ -65,22 +65,22 @@ host.adapter = function adapter(obj, fn) {
 };
 
 /*
-Create an actor behavior that cycles through a list of child configurations,
+Create an actor behavior that cycles through a list of guest configurations,
 dispatching one event at a time until no events remain.
 */
-host.dispatchRing = function dispatchRing(children, errorLog) {
+host.dispatchRing = function dispatchRing(guests, errorLog) {
     errorLog = errorLog || host.errorLog;
-    var m = children.length;
+    var m = guests.length;
     var n = m;  // countdown to idle
-    var i = 0;  // current child index
+    var i = 0;  // current guest index
     var dispatchBeh = function dispatchBeh() {
         var self = this.self;
         var fail = function fail(ex) {
             errorLog(ex);
             self(false);  // treat exception as no events
         };
-        var child = children[i];
-        child({
+        var guest = guests[i];
+        guest({
             arguments: [],
             ok: self,
             fail: fail
@@ -91,10 +91,10 @@ host.dispatchRing = function dispatchRing(children, errorLog) {
         if (effect) {
             n = m;  // reset idle countdown
         } else {
-            --n;  // countdown idle children
+            --n;  // countdown idle guests
         }
         if (n > 0) {
-            ++i;  // advance to next child
+            ++i;  // advance to next guest
             if (i >= m) {
                 i = 0;
             }
@@ -106,23 +106,23 @@ host.dispatchRing = function dispatchRing(children, errorLog) {
 };
 
 /*
-Create an actor behavior that cycles through a list of child configurations,
+Create an actor behavior that cycles through a list of guest configurations,
 calling `eventLoop(options)` for each until all event queues are exhausted.
 */
-host.eventLoopRing = function eventLoopRing(children, errorLog) {
+host.eventLoopRing = function eventLoopRing(guests, errorLog) {
     errorLog = errorLog || host.errorLog;
-    var m = children.length;
+    var m = guests.length;
     var n = m;  // countdown to idle
-    var i = 0;  // current child index
+    var i = 0;  // current guest index
     var dispatchBeh = function dispatchBeh() {
         var self = this.self;
         var fail = function fail(ex) {
             errorLog(ex);
             self(true);  // treat exception as queue empty
         };
-        var child = children[i];
-        child.eventLoop({
-            arguments: [ child.options ],
+        var guest = guests[i];
+        guest.eventLoop({
+            arguments: [ guest.options ],
             ok: self,
             fail: fail
         });
@@ -130,12 +130,12 @@ host.eventLoopRing = function eventLoopRing(children, errorLog) {
     };
     var statusBeh = function statusBeh(empty) {
         if (empty) {
-            --n;  // countdown idle children
+            --n;  // countdown idle guests
         } else {
             n = m;  // reset idle countdown
         }
         if (n > 0) {
-            ++i;  // advance to next child
+            ++i;  // advance to next guest
             if (i >= m) {
                 i = 0;
             }

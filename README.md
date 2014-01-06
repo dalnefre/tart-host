@@ -1,7 +1,7 @@
 tart-host
 =========
 
-Actor-based core scheduling for child configurations
+Actor-based core scheduling for guest configurations
 
 ## Usage
 
@@ -66,8 +66,8 @@ scheduler();  // start scheduler
 **Public API**
 
   * [host.adapter(object, method)](#hostadapterobjectmethod)
-  * [host.dispatchRing(children\[, errorLog\])](#hostdispatchRingchildrenerrorLog)
-  * [host.eventLoopRing(children\[, errorLog\])](#hosteventLoopRingchildrenerrorLog)
+  * [host.dispatchRing(guests\[, errorLog\])](#hostdispatchRingguestserrorLog)
+  * [host.eventLoopRing(guests\[, errorLog\])](#hosteventLoopRingguestserrorLog)
 
 ### host.adapter(object, method)
 
@@ -76,12 +76,12 @@ using `message.arguments` as the argument list
 and sending the return value to `message.ok`.
 If an exception is thrown, it is sent to `message.fail`.
 
-### host.dispatchRing(children\[, errorLog\])
+### host.dispatchRing(guests\[, errorLog\])
 
-Create an actor behavior that cycles through a list of child configurations,
+Create an actor behavior that cycles through a list of guest configurations,
 dispatching one event at a time until no events remain.
 
-### host.dispatchRing(children\[, errorLog\])
+### host.eventLoopRing(guests\[, errorLog\])
 
-Create an actor behavior that cycles through a list of child configurations,
+Create an actor behavior that cycles through a list of guest configurations,
 calling `eventLoop(options)` for each until all event queues are exhausted.
